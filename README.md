@@ -127,7 +127,7 @@ The following picture demonstrate the entire pipeline when user want to simulate
 
 Clone the example folder from repository:
 
-       $ git clone https://github.com/huaipeng0/ncc.simulator.git
+       $ git clone https://github.com/huaipeng/ncc.simulator.exe.git
        
 All the necessary configuration files and input files are ready in the folder '25-cores', after user clone the example folder and navigate into the folder '25-cores', he can type the following command to run the simualtor:
 ~~~~
