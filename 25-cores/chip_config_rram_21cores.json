@@ -1,0 +1,47 @@
+{
+  "numNodes": 21,
+  "defaultCoreSettings": {
+    "indices": [
+      {
+        "start": 0,
+        "end": 20
+      }
+    ],
+    "numAxons": 256,
+    "numNeurons": 256,
+    "crossbarType": "RRAM_CROSSBAR",
+    "rramCrossbarSettings": {
+      "lowResistanceValue": 100000.0,
+      "highResistanceValue": 1000000.0,
+      "inputVoltage": 1.0,
+      "adcGain": 14222222.0,
+      "numBitsAdc": 32,
+      "shortOpenSettings": {
+        "shortProbability": 0.0,
+        "openProbability": 0.0,
+        "shortResistance": 1000.0,
+        "openResistance": 1000000000.0,
+        "backup_rows": -1
+      },
+      "variabilitySettings": {
+        "simulateWriteVariability": false,
+        "simulateReadVariability": true,
+        "modelFilename": "rram_noise_config.json"
+      }
+    },
+    "neuronSettings": {
+      "numBitsAccumulator": 16,
+      "thresholdLevel": 200,
+      "resetBehavior": "RESET_BY_SUBTRACTION",
+      "resetLevel": 0,
+      "leak": 0
+    }
+  },
+  "meshNetwork": {
+    "meshSizeCx": 5,
+    "meshSizeCy": 5
+  },
+  "defaultRouterSettings": {
+    "capacityInputBuffer": 256
+  }
+}

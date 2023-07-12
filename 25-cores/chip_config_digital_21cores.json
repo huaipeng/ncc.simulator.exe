@@ -1,0 +1,31 @@
+{
+  "numNodes": 21,
+  "defaultCoreSettings": {
+    "indices": [
+      {
+        "start": 0,
+        "end": 20
+      }
+    ],
+    "numAxons": 256,
+    "numNeurons": 256,
+    "crossbarType": "DIGITAL_CROSSBAR",
+    "digitalCrossbarSettings": {
+      "numBitsSynapse": 8
+    },
+    "neuronSettings": {
+      "numBitsAccumulator": 16,
+      "thresholdLevel": 2,
+      "resetBehavior": "RESET_BY_SUBTRACTION",
+      "resetLevel": 0,
+      "leak": 0
+    }
+  },
+  "meshNetwork": {
+    "meshSizeCx": 5,
+    "meshSizeCy": 5
+  },
+  "defaultRouterSettings": {
+    "capacityInputBuffer": 256
+  }
+}

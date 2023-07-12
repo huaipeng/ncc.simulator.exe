@@ -1,0 +1,15 @@
+{
+  "numTotalSecs": 1.0,
+  "frequencyInCore": 200,
+  "frequencyInComm": 20000,
+  "spikeSources": "./spikes/",
+  "bitstreamFilename": "./bitstream_config_rram_21cores.bin",
+  "chipConfigFilename": "./chip_config_rram_21cores.json",
+  "generatorSeed": 3,  
+  "verboses":[],
+  "externalCoreIds": [20],
+  "computingType": "GPU0_COMPUTING",
+  "networkType": "IDEAL_NETWORK",
+  "index_gpu": 0,
+  "output_opt": "bar"
+}

@@ -1,0 +1,179 @@
+// ------------------------------------------------------------------
+// NeuroSim (c) 2018 Institute of High Performance Computing (IHPC)
+// Agency for Science, Technology and Research (A*STAR)
+// ------------------------------------------------------------------
+
+syntax = "proto2";
+
+package neurosim; 
+
+
+message ChipConfig {
+    // Number of nodes. The value must be equal to
+    // The mutiplication of mesh_size_cx and mesh_size_cy inside
+    // 2DMeshNetwork.
+    required int32 num_nodes = 1;
+
+    // Default core settings are used unless otherwise specified
+    required CoreConfig default_core_settings = 2;
+
+    // Allows user to specify settings for each core
+    repeated CoreConfig cores = 3;
+    
+    // 2D Mesh network setting
+    optional MeshNetworkConfig mesh_network = 4;
+    
+    // Default router settings
+    optional RouterConfig default_router_settings = 5;
+}
+
+message MeshNetworkConfig {
+	// The number of nodes for x-dimension in 2d mesh network.
+	required int32 mesh_size_cx = 1;
+	
+	// The number of nodes for y-dimension in 2d mesh network
+	required int32 mesh_size_cy = 2;
+}
+
+message RouterConfig {
+	// input buffers size in number of flits
+	required int32 capacity_input_buffer = 1 [default=256];
+}
+
+message CoreConfig {
+    message CoreIndexRange {
+        // Start index (inclusive)
+        required int32 start = 1 [default = 0];
+        // End index (inclusive)
+        required int32 end = 2 [default = -1];
+    }
+
+    // Specify indices of cores having this config
+    repeated CoreIndexRange indices = 1;
+
+    // Number of rows or input axons supported by core
+    required int32 num_axons = 2 [default = 256];
+
+    // Number of neurons in core
+    required int32 num_neurons = 3 [default = 256];
+
+    enum CrossbarType {
+        DIGITAL_CROSSBAR = 0;
+        RRAM_CROSSBAR = 1;
+    }
+
+    // Specify type of crossbar for this core
+    required CrossbarType crossbar_type = 4 [default = DIGITAL_CROSSBAR];
+
+    // Crossbar settings
+    oneof crossbar_settings {
+        DigitalCrossbarConfig digital_crossbar_settings = 5;
+        RRAMCrossbarConfig rram_crossbar_settings = 6;
+    }
+    
+    // Neuron parameters for this core
+    required LIFNeuronConfig neuron_settings = 7; 
+
+}   
+
+message DigitalCrossbarConfig {
+    // A digital crossbar stores positive and negative weights
+    // in its synapses.
+    // E.g. 8 bit can store -128 to 127 different levels
+    required int32 num_bits_synapse = 1 [default = 8];
+}
+
+message RRAMCrossbarConfig {
+    // An RRAM crossbar stores resistances at each crosspoint.
+    // Resistances are stored as float values.
+    // An ADC will be used for converting current sum into digital values.
+
+    // Value of low resistance state
+    required float low_resistance_value = 1 [default = 1.0e3];
+
+    // Value of high resistance state
+    required float high_resistance_value = 2 [default = 1.0e5];
+
+    // Voltage supply to rram devices
+    required float input_voltage = 3 [default = 1.0];
+
+    // An ADC is responsible for converting final current sum into digital values.
+    // Gain for scaling current sum. Is this configurable for each core?
+    required float adc_gain = 4 [default = 1];
+
+    // Number of bits to represent current sum
+    // This value will be passed to the neuron for processing
+    required int32 num_bits_adc = 5 [default = 16];
+
+    // Open-Short defect for this crossbar
+    optional ShortOpenDefectConfig short_open_settings = 6;
+
+    // RRAM read and write variability
+    optional RRAMVariabilityConfig variability_settings = 7;
+    
+    // Resolution bits for precision evaluation in
+    // the conversion results of an A/D converter
+    optional int32 num_bits_resolution = 8 [default = 0];
+}
+
+message LIFNeuronConfig {
+    // A neuron is modelled as a digital circuit
+
+    // Number of bits for accumulator (signed representation)
+    // Values that exceed range will be clipped
+    required int32 num_bits_accumulator = 1 [default = 16];
+
+    // Threshold for emitting a spike
+    required int32 threshold_level = 2 [default = 0];
+    
+    // Threshold
+
+    // Support 3 reset behaviors
+    enum ResetBehavior {
+        RESET_BY_SUBTRACTION = 0;
+        RESET_TO_LEVEL = 1;
+        RESET_ON_ALWAYS = 2;
+        RESET_BY_DECAY = 3;
+    }
+
+    // Specify reset behavior
+    required ResetBehavior reset_behavior = 3 [default = RESET_BY_SUBTRACTION];
+
+    // Unused when reset behavior is by subtraction
+    optional int32 reset_level = 4 [default = 0];
+
+    // Unused by IAF neuron
+    oneof leak_data {
+    	int32 leak = 5 [default = 0];
+    	float leak_f = 7 [default = 0.0];
+    }
+}
+
+message ShortOpenDefectConfig {
+    // The probability to produce short-circuit
+    required float short_probability = 1 [default = 0.3];
+    
+	// The probability to produce open-circuit
+    required float open_probability = 2 [default = 0.1];
+    
+	// The short-circuit resistance
+    required float short_resistance = 3 [default = 1e3];
+    
+	// The open-circuit resistance
+	required float open_resistance = 4 [default = 1e7];
+	
+	// The number of backup rows to remove defects
+	optional int32 backup_rows = 5 [default = -1];
+}
+
+message RRAMVariabilityConfig {
+    // Turn on/off write variability simulation
+    required bool simulate_write_variability = 1 [default = false];
+
+    // Turn on/off read variability simulation
+    // Currently, only RTN noise is being modeled
+    required bool simulate_read_variability = 2 [default = false];
+
+    // Filename of model settings
+    required string model_filename = 3;
+}
