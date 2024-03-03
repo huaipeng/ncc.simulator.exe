@@ -6,14 +6,13 @@ keywords: {Neurons;Hardware;Computational modeling;Task analysis;Biological neur
 
 ## 1. **Install Dependency Libraries Before to Run the Simulator**
 
-The simulator only needs one dependency libraries: Protobuf. The simulator use Protobuf version is 3.4.0. You can
-download source code from:
+The simulator requires a dependency library: Protobuf. The version of Protobuf utilized by the simulator is 3.4.0. You can acquire the source code from the following link:
 
       https://github.com/google/protobuf/releases/download/v3.4.0/protobuf-cpp-3.4.0.zip
 
-After downloading the source code, user can install Protobuf library from source code following below steps:
+Once the source code is downloaded, users can proceed to install the Protobuf library from the source code by following the steps outlined below:
 
-  1.1   ***Install dependency libraries for the protobuf***. On Ubuntu, you can install them with:
+  1.1   ***Install dependency libraries of the protobuf***. To ensure proper installation of Protobuf from source code, it is necessary to install the required dependency libraries. On Ubuntu, you can execute the following command to install the dependencies for Protobuf:
 
      $ sudo apt-get install autoconf automake libtool curl make g++ unzip
 
