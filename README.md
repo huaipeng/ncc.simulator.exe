@@ -1,5 +1,8 @@
 # **ncc.simulator**
-Neuromorphic chip simulator is developed by C++, the simulator instance named as 'ncc.simulator' can run on the Ubuntu 18.04.4 LTS, with OpenMP version, CUDA 
+Neuromorphic chip simulator is developed by C++, the simulator instance named as 'ncc.simulator' can run on the Ubuntu 18.04.4 LTS, with OpenMP version, CUDA. more details about the simulator was shown in the paper: H. Zhang et al., "Simeuro: A Hybrid CPU-GPU Parallel Simulator for Neuromorphic Computing Chips," in IEEE Transactions on Parallel and Distributed Systems, vol. 34, no. 10, pp. 2767-2782, Oct. 2023, doi: 10.1109/TPDS.2023.3291795.
+keywords: {Neurons;Hardware;Computational modeling;Task analysis;Biological neural networks;Routing;Behavioral sciences;Neuromorphic computing;chip simulation;deep learning},
+
+ 
 
 ## 1. **Install Dependency Libraries Before to Run the Simulator**
 
