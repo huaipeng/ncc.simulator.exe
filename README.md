@@ -4,7 +4,7 @@ keywords: {Neurons;Hardware;Computational modeling;Task analysis;Biological neur
 
  
 
-## 1. **Install Dependency Libraries Before to Run the Simulator**
+## 1. **Install Protobuf Library Before to Run the Simulator**
 
 The simulator requires a dependency library: Protobuf. The version of Protobuf utilized by the simulator is 3.4.0. You can acquire the source code from the following link:
 
@@ -16,11 +16,11 @@ Once the source code is downloaded, users can proceed to install the Protobuf li
 
      $ sudo apt-get install autoconf automake libtool curl make g++ unzip
 
-1.2  ***Install the protobuf***. Unzip the package and navigate into the unzipped folder of protobuf-3.4.0 to generate the configuration script first :
+1.2  ***Install the protobuf***. Unzip the package and then navigate into the extracted folder named protobuf-3.4.0. Initially, generate the configuration script:
 
      $ ./autogen.sh
 
-Then to build and install the Protocol Buffer runtime and the Protocol Buffer compiler (protoc) as the following commands:
+Next, proceed to build and install both the Protocol Buffer runtime and the Protocol Buffer compiler (protoc) by executing the following commands:
 
      $ ./configure
      $ make
