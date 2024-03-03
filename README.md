@@ -1,6 +1,5 @@
 # **ncc.simulator**
-The neuromorphic chip simulator, coded in C++, OpenMP, CUDA, is named 'ncc.simulator' and is compatible with Ubuntu 18.04.4 LTS. Further details about the simulator can be found in the associated paper.: H. Zhang et al., "Simeuro: A Hybrid CPU-GPU Parallel Simulator for Neuromorphic Computing Chips," in IEEE Transactions on Parallel and Distributed Systems, vol. 34, no. 10, pp. 2767-2782, Oct. 2023, doi: 10.1109/TPDS.2023.3291795.
-keywords: {Neurons;Hardware;Computational modeling;Task analysis;Biological neural networks;Routing;Behavioral sciences;Neuromorphic computing;chip simulation;deep learning},
+The neuromorphic chip simulator, coded in C++, OpenMP, CUDA, is named 'ncc.simulator' and is compatible with Ubuntu 18.04.4 LTS. Further details about the simulator can be found in the associated paper.: H. Zhang et al., "Simeuro: A Hybrid CPU-GPU Parallel Simulator for Neuromorphic Computing Chips," in IEEE Transactions on Parallel and Distributed Systems, vol. 34, no. 10, pp. 2767-2782, Oct. 2023, doi: 10.1109/TPDS.2023.3291795.keywords: {Neurons;Hardware;Computational modeling;Task analysis;Biological neural networks;Routing;Behavioral sciences;Neuromorphic computing;chip simulation;deep learning}, The paper was published at IEEE Transactions on Parallel and Distributed Systems https://ieeexplore.ieee.org/document/10172030
 
 ## 1. **Installing the Protobuf Library Before Running the Simulator**
 
