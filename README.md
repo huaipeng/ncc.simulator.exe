@@ -64,85 +64,88 @@ The diagram below illustrates the architecture of the simulator, providing a gen
 
 3.7 ***Two computing modes: ANN and SNN.*** SNN (spike neural network) and ANN (artificial neural network) modes utilize original values as chip inputs.
 
-## 4. **What is Needed for the Simulator:**
-   4.1  ***The simulation configuration file.*** This file include all global settings for the simulator.
-   
-   4.2  ***The chip configuration file.*** This file define the chip layout including core number and core size.
-   
-   4.3  ***The bitstream configuration file.*** This file include weight matrics for each core and connections between cores and neuron settings.
-   
-   4.4  ***The input folder including spike source files.*** This folder specify the input folder for the simulation including all spike sources in CSV format
-   
-   4.5  ***The execution file : ncc.simulator.*** This is binary execution file which is compiled on Ubuntu 18.04.4 LTS.
+## 4. **Requirements for the Simulator:**
 
-## 5. **The input file format for the simulator in the SNN mode:**
+4.1  ***Simulation configuration file.*** This file contains all global settings for the simulator.
 
-The input file is in the CSV format holding spike trains for each axon. three columns are included: time step, core id, axon id. In the below picture, the left side display one example segment from one spike source file; the right side display the sorted records by last column 'axon id' from the same spike source file, which demonstrate all the spikes at different steps for one particular axon.
+4.2  ***Chip configuration file.*** This file defines the layout of the chip, including the number of cores and their sizes.
+
+4.3  ***Bitstream configuration file.*** This file includes weight matrices for each core and connections between cores, along with neuron settings.
+
+4.4  ***Input folder containing spike source files.*** This folder specifies the input data for the simulation, including all spike sources in CSV format.
+
+4.5  ***Execution file: ncc.simulator.*** This binary execution file is compiled for Ubuntu 18.04.4 LTS.
+
+## 5. **Input File Format for the Simulator in SNN Mode:**
+
+The input file is in CSV format, containing spike trains for each axon. It consists of three columns: time step, core ID, and axon ID. In the image below, the left side displays an example segment from a spike source file, while the right side shows sorted records by the last column 'axon ID' from the same spike source file. This demonstrates all spikes at different steps for a particular axon.
 
 <img width="659" src="https://user-images.githubusercontent.com/42291598/102757109-c34cf000-43ab-11eb-972f-753b4dba99dd.png">
 
-## 6. **The Output file format from the simulator in the SNN mode:**
+## 6. **Output File Format from the Simulator in SNN Mode:**
 
-When user specify the output cores in the simulation configuration file, the simulator will produce spike output for each spike source and store into one corresponding file with the extension name '.sink'. The '.sink' file is also in CSV format and include five columns : time step, source code id, source neuron id, destination code id, destination axon id.  The following picture display one example segment from one '.sink' file
+When users specify the output cores in the simulation configuration file, the simulator generates spike output for each spike source and stores it in a corresponding file with the extension '.sink'. The '.sink' file is also in CSV format and includes five columns: time step, source core ID, source neuron ID, destination core ID, destination axon ID. The image below displays an example segment from one '.sink' file.
 
 <img width="539" alt="Screenshot 2022-12-21 at 5 05 42 PM" src="https://user-images.githubusercontent.com/42291598/102759234-cd242280-43ae-11eb-968a-7cbad683263f.png">
 
-The user can compute following information from the 'sink' file:
+From the 'sink' file, users can compute the following information:
 
-- Compute the statistics about spike output from one particular core using column ’src core id’.
+- Calculate statistics about spike output from a particular core using the 'src core id' column.
 
-- Compute average spike ratio per tick between different cores using the column ‘src core id’ and ‘dest core id’
+- Determine the average spike ratio per tick between different cores using the 'src core id' and 'dest core id' columns.
 
-- Compute predication for final class  using the column ‘src neuron id’ or ‘dest axon id’
+- Make predictions for the final class using either the 'src neuron id' or 'dest axon id' columns.
 
+## 7. **Input File Format for the Simulator in ANN Mode:**
 
-## 7. **The input file format for the simulator in the ANN mode:**
-
-The ANN mode can help user to locate the issues in the mapping because the real values are the inputs of the chip simulation. The user can compare the values between the simulator output and Tensorflow outputs. The following picture display one example segment from one input file for ANN mode simulation. The four columns are included: time step, source core id, source axon id, spiked value (floating-point value which is equal to one pixel value in the input image).
+The ANN mode enables users to pinpoint issues in mapping by using real values as inputs for chip simulation. Users can compare these values between the simulator output and TensorFlow outputs. The image below displays an example segment from an input file for ANN mode simulation. It contains four columns: time step, source core id, source axon id, and spiked value (a floating-point value equivalent to one pixel value in the input image).
 
 <img width="364" alt="Screenshot 2022-12-21 at 5 23 18 PM" src="https://user-images.githubusercontent.com/42291598/102760975-4290f280-43b1-11eb-83d5-da1e55fb6b2b.png">
 
-The input file only include one time-step because in the ANN mode, the inputs are fed into the chip at one time. the last column in the input file include original floating-point values.
+The input file contains only one time-step because, in the ANN mode, the inputs are fed into the chip at a single time. The last column in the input file includes the original floating-point values.
 
-## 8. **The output file format from the simulator in the ANN mode:**
+## 8. **Output File Format from the Simulator in ANN Mode:**
 
-The output files include six columns when user specify the ANN mode : time step, source code id, source axon id, destination core id, destination axon id, spiked value. The following picture display one example segment from one 'sink' file:
+The output files consist of six columns when the ANN mode is specified: time step, source core id, source axon id, destination core id, destination axon id, and spiked value. The image below displays an example segment from one 'sink' file.
 
 <img width="539" alt="Screenshot 2022-12-21 at 5 05 42 PM" src="https://user-images.githubusercontent.com/42291598/102762249-fe9eed00-43b2-11eb-826c-3aa5a691e33f.png">
 
-From the above 'sink' file in the ANN mode, user can perform the following computing:
+From the provided 'sink' file in the ANN mode, users can carry out the following computations:
 
-- Compare simulator’s output and Tensorflow output using the column ‘spiked value’ and ‘src core id’ and ‘src neuron id’
-- Compute predication for final class using the column ‘src neuron id’ or ‘dest axon id’ and ’spiked value’
+- Compare the simulator’s output and TensorFlow output using the columns 'spiked value', 'src core id', and 'src neuron id'.
+- Make predictions for the final class using the columns 'src neuron id' or 'dest axon id' and 'spiked value'.
 
-## 9. **One case study for 21-core simulation for MNIST classification:**
+## 9. **Case Study: 21-Core Simulation for MNIST Classification:**
 
-The following picture demonstrate the entire pipeline when user want to simulate neuromorphic chip how to work. The three steps are needed: 
+The image below illustrates the entire pipeline when a user wants to simulate a neuromorphic chip's operation. The process involves three steps:
 
-- Build the neural network model,
-- Map the model onto the chip, 
-- Perform the simulation on the simulator.
+- Building the neural network model,
+- Mapping the model onto the chip,
+- Performing the simulation using the simulator.
 
 <img width="792" alt="Screenshot 2022-12-21 at 5 40 59 PM" src="https://user-images.githubusercontent.com/42291598/102763241-5d189b00-43b4-11eb-9049-af4944ea54d0.png">
 
-## 10. Run the Simulator and Explore its Features
+## 10. Running the Simulator and Exploring its Features
 
-Clone the example folder from repository:
+To get started, clone the example folder from the repository:
 
-       $ git clone https://github.com/huaipeng/ncc.simulator.exe.git
-       
-All the necessary configuration files and input files are ready in the folder '25-cores', after user clone the example folder and navigate into the folder '25-cores', he can type the following command to run the simualtor:
-~~~~
+```bash
+$ git clone https://github.com/huaipeng/ncc.simulator.exe.git
+```
+
+All necessary configuration files and input files are available in the '25-cores' folder. After cloning the example folder and navigating into the '25-cores' directory, you can execute the following command to run the simulator:
+
+```bash
 ./ncc.simulator simulation_config_digital.json
-~~~~
+```
 
-The executable file is *'ncc.simulator'* and the configuration file *'simulation_config_digital.json'* including different settings for the simulator. After you run the simulator, you can find the output file with the extension named like '*.sink' in the same folder as the spike sources.
+The executable file is *'ncc.simulator'*, and the configuration file *'simulation_config_digital.json'* contains various settings for the simulator. Once the simulator is run, you'll find the output files with extensions like '*.sink' in the same folder as the spike sources.
 
-The following picture display the progress to run the simulator: type the simulator name with one simulation configuration file as input argument. The simulator will load spike source one by one from input folder and produce corresponding 'sink' file and print out the 'sink' filename on the console.
+The first image below illustrates the process of running the simulator: typing the simulator name with a simulation configuration file as the input argument. The simulator loads spike sources one by one from the input folder, produces corresponding 'sink' files, and prints out the 'sink' filenames on the console.
 
-<img width="935" alt="Screenshot 2023-06-02 at 1 56 43 PM" src="https://user-images.githubusercontent.com/42291598/120434561-3624b300-c3af-11eb-8470-8285b1024a9f.png">
+![Simulator Running](https://user-images.githubusercontent.com/42291598/120434561-3624b300-c3af-11eb-8470-8285b1024a9f.png)
 
-The following picture display the processing of output files in order to predict final class for each output and also compute final accuracy for entire dataset.
+The second image showcases the processing of output files to predict the final class for each output and compute the final accuracy for the entire dataset.
 
-<img width="732" alt="Screenshot 2023-06-02 at 2 30 35 PM" src="https://user-images.githubusercontent.com/42291598/120434570-391fa380-c3af-11eb-833c-fa98c5656b26.png">
+![Output Processing](https://user-images.githubusercontent.com/42291598/120434570-391fa380-c3af-11eb-833c-fa98c5656b26.png)
 
